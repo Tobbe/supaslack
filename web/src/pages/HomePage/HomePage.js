@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
-import UserContext from '../../lib/Store'
-import { supabase } from '../../lib/Store'
+import UserContext from 'src/lib/UserContext'
+import { supabase } from 'src/lib/Store'
 
 const HomePage = () => {
   const { signIn } = useContext(UserContext)
