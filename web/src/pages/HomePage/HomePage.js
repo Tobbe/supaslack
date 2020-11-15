@@ -1,12 +1,18 @@
 import { useState } from 'react'
+import { useAuth } from '@redwoodjs/auth'
 
 const HomePage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const { logIn, signUp } = useAuth()
 
   const handleLogin = async (type, email, password) => {
     try {
       console.log(`${type} as ${email}:${password}`)
+      type === 'LOGIN'
+        ? await logIn({ email, password })
+        : await signUp({ email, password })
+      console.log(`${email} is logged in`)
     } catch (error) {
       console.log('error', error)
       alert(error.error_description || error)
