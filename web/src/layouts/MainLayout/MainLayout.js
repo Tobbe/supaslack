@@ -1,3 +1,5 @@
+import { Link, routes } from '@redwoodjs/router'
+
 const MainLayout = ({ channels, activeChannelId, children }) => {
   const logOut = () => {
     console.log('logOut')
@@ -33,11 +35,12 @@ const MainLayout = ({ channels, activeChannelId, children }) => {
           <ul className="channel-list">
             {channels.map((channel) => (
               <li key={channel.id}>
-                <span
+                <Link
                   className={channel.id === activeChannelId ? 'font-bold' : ''}
+                  to={routes.channel({ id: channel.id })}
                 >
                   {channel.slug}
-                </span>
+                </Link>
               </li>
             ))}
           </ul>
