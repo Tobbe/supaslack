@@ -3,23 +3,13 @@ import { useAuth } from '@redwoodjs/auth'
 import MainLayout from 'src/layouts/MainLayout'
 import Message from 'src/components/Message'
 import MessageInput from 'src/components/MessageInput'
-
-const addMessage = (text, channelId, user) => {
-  console.log(`Send "${text}" from ${user} to ${channelId}`)
-}
+import { useStore, addMessage } from 'src/lib/Store'
 
 const ChannelPage = ({ id }) => {
   const {} = useAuth()
   const messagesEndRef = useRef(null)
 
-  // Hardcode for now
-  const messages = []
-  const channels = [
-    {
-      id: 1,
-      slug: 'public',
-    },
-  ]
+  const { messages, channels } = useStore({ channelId: id })
 
   useEffect(() => {
     messagesEndRef.current.scrollIntoView({

@@ -1,4 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
+import { addChannel } from 'src/lib/Store'
 
 const MainLayout = ({ channels, activeChannelId, children }) => {
   const logOut = () => {
@@ -19,7 +20,7 @@ const MainLayout = ({ channels, activeChannelId, children }) => {
   const newChannel = async () => {
     const slug = prompt('Please enter your name')
     if (slug) {
-      console.log('newChannel', slugify(slug))
+      addChannel(slugify(slug))
     }
   }
 
