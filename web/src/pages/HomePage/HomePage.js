@@ -1,33 +1,10 @@
 import { useState } from 'react'
-import { useAuth } from '@redwoodjs/auth'
-import { navigate, routes, useLocation } from '@redwoodjs/router'
+import { useUser } from 'src/lib/UserContext'
 
 const HomePage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { logIn, signUp } = useAuth()
-  const { search } = useLocation()
-
-  const handleLogin = async (type, email, password) => {
-    try {
-      console.log(`${type} as ${email}:${password}`)
-      type === 'LOGIN'
-        ? await logIn({ email, password })
-        : await signUp({ email, password })
-      console.log(`${email} is logged in`)
-
-      const redirectTo = new URLSearchParams(search).get('redirectTo')
-
-      if (redirectTo) {
-        navigate(redirectTo)
-      } else {
-        navigate(routes.channel({ id: 1 }))
-      }
-    } catch (error) {
-      console.log('error', error)
-      alert(error.error_description || error)
-    }
-  }
+  const { handleLogin } = useUser()
 
   return (
     <div className="w-full h-full flex justify-center items-center p-4 bg-gray-300">
@@ -59,26 +36,24 @@ const HomePage = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <a
+            <button
               onClick={(e) => {
                 e.preventDefault()
                 handleLogin('SIGNUP', email, password)
               }}
-              href={'/channels'}
               className="bg-indigo-700 hover:bg-teal text-white py-2 px-4 rounded text-center transition duration-150 hover:bg-indigo-600 hover:text-white"
             >
               Sign up
-            </a>
-            <a
+            </button>
+            <button
               onClick={(e) => {
                 e.preventDefault()
                 handleLogin('LOGIN', email, password)
               }}
-              href={'/channels'}
               className="border border-indigo-700 text-indigo-700 py-2 px-4 rounded w-full text-center transition duration-150 hover:bg-indigo-700 hover:text-white"
             >
               Login
-            </a>
+            </button>
           </div>
         </div>
       </div>

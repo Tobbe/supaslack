@@ -1,9 +1,9 @@
 import { Link, routes } from '@redwoodjs/router'
-import { useAuth } from '@redwoodjs/auth'
 import { addChannel } from 'src/lib/Store'
+import { useUser } from 'src/lib/UserContext'
 
 const MainLayout = ({ channels, activeChannelId, children }) => {
-  const { logOut } = useAuth()
+  const { signOut } = useUser()
 
   const slugify = (text) => {
     return text
@@ -58,7 +58,7 @@ const MainLayout = ({ channels, activeChannelId, children }) => {
         <div className="p-2">
           <button
             className="bg-blue-900 hover:bg-blue-800 text-white py-2 px-4 rounded w-full transition duration-150"
-            onClick={() => logOut()}
+            onClick={() => signOut()}
           >
             Log out
           </button>

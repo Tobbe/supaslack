@@ -3,21 +3,24 @@ import { createClient } from '@supabase/supabase-js'
 import ReactDOM from 'react-dom'
 import { RedwoodProvider, FatalErrorBoundary } from '@redwoodjs/web'
 import FatalErrorPage from 'src/pages/FatalErrorPage'
+import { UserProvider } from 'src/lib/UserContext'
 
 import Routes from 'src/Routes'
 
 import './index.css'
 
 const supabaseClient = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_KEY
-  )
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+)
 
 ReactDOM.render(
   <FatalErrorBoundary page={FatalErrorPage}>
     <AuthProvider client={supabaseClient} type="supabase">
       <RedwoodProvider>
-        <Routes />
+        <UserProvider>
+          <Routes />
+        </UserProvider>
       </RedwoodProvider>
     </AuthProvider>
   </FatalErrorBoundary>,

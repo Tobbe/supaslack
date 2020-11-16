@@ -1,12 +1,12 @@
 import { useRef, useEffect } from 'react'
-import { useAuth } from '@redwoodjs/auth'
 import MainLayout from 'src/layouts/MainLayout'
 import Message from 'src/components/Message'
 import MessageInput from 'src/components/MessageInput'
 import { useStore, addMessage } from 'src/lib/Store'
+import { useUser } from 'src/lib/UserContext'
 
 const ChannelPage = ({ id }) => {
-  const {} = useAuth()
+  const { user } = useUser()
   const messagesEndRef = useRef(null)
 
   const { messages, channels } = useStore({ channelId: id })
@@ -32,7 +32,10 @@ const ChannelPage = ({ id }) => {
         </div>
         <div className="p-2 absolute bottom-0 left-0 w-full">
           <MessageInput
-            onSubmit={async (text) => addMessage(text, channelId, user)}
+            onSubmit={(text) => {
+              console.log(`${user} wants to add ${text} to channel ${id}`)
+              addMessage(text, id, user)
+            }}
           />
         </div>
       </div>
