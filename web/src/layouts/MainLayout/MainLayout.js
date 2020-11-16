@@ -1,10 +1,9 @@
 import { Link, routes } from '@redwoodjs/router'
+import { useAuth } from '@redwoodjs/auth'
 import { addChannel } from 'src/lib/Store'
 
 const MainLayout = ({ channels, activeChannelId, children }) => {
-  const logOut = () => {
-    console.log('logOut')
-  }
+  const { logOut } = useAuth()
 
   const slugify = (text) => {
     return text
