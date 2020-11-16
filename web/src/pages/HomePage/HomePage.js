@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useAuth } from '@redwoodjs/auth'
+import { navigate, routes, useLocation } from '@redwoodjs/router'
 
 const HomePage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { logIn, signUp } = useAuth()
+  const { search } = useLocation()
 
   const handleLogin = async (type, email, password) => {
     try {
@@ -13,6 +15,14 @@ const HomePage = () => {
         ? await logIn({ email, password })
         : await signUp({ email, password })
       console.log(`${email} is logged in`)
+
+      const redirectTo = new URLSearchParams(search).get('redirectTo')
+
+      if (redirectTo) {
+        navigate(redirectTo)
+      } else {
+        navigate(routes.channel({ id: 1 }))
+      }
     } catch (error) {
       console.log('error', error)
       alert(error.error_description || error)
